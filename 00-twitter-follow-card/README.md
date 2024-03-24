@@ -8,7 +8,7 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 
-# El Proyecto consiste en: un componente de lista de usuarios como el de Twitter, la sección de"Seguir" o "Siguiendo".
+# Instalaciones:
 
-## Tras clonar el proyecto de Github, ejecutar: "npm install"
-## Para lanzar el proyecto ejectuar ""npm run dev""
+1. Tras clonar el proyecto de Github, ejecutar: "npm install"
+2. Para lanzar el proyecto ejectuar ""npm run dev""
