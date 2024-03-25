@@ -1,6 +1,6 @@
 import { WINNER_COMBOS } from "../constants"
 import { TURNS } from "../constants"
-import { saveGameToStorage, resetGameStorage } from "./storage"
+import { saveGameToStorage, resetGameStorage } from "../storage"
 
 // Función para verificar si hay un ganador en el tablero dado
 // Recorre todas las combinaciones ganadoras y comprueba si alguna de ellas está presente en el tablero
