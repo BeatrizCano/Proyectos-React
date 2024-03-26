@@ -1,7 +1,7 @@
 import './App.css'
 import { useCatImage } from "./hooks/useCatImage"
 import { useCatFact } from './hooks/useCatFact'
-import { Otro } from './components/Otro.jsx/index.js'
+import { Otro } from './components/Otro.jsx'
 
 
 export function App () {
@@ -19,8 +19,9 @@ export function App () {
             <button onClick={handleClick}>Get new fact</button>
             {fact && <p>{ fact }</p>}            
             {imageUrl && <img src={imageUrl} alt={`Image extracted using the first three words for ${fact}`} />}
-
-            <Otro />
+            
+            {/* se comentó el componente otro porque da problemas en los tests porque se repite 'img' en el componente y aquí */}
+            {/* <Otro /> */}
             {/* <section>
                 {fact && <p>{ fact }</p>}            
                 {imageUrl && <img src={imageUrl} alt={`Image extracted using the first three words for ${fact}`} />}
