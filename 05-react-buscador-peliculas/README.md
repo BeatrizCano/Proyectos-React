@@ -26,3 +26,8 @@ Primera iteración:
 ✅ Evita que se haga la búsqueda continuamente al escribir (debounce)
 
 ## Se usó la biblioteca CSS de estilos class less 'Water.css' en el 'index.css'
+
+## Instalaciones:
+
+1. Tras clonar el proyecto de Github, ejecutar: "npm install"
+2. Para lanzar el proyecto ejectuar ""npm run dev""
