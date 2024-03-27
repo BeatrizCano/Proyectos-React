@@ -3,20 +3,38 @@ import './App.css'
 import { useMovies } from './hooks/useMovies'
 import { Movies } from './components/Movies'
 import { useSearch } from './hooks/useSearch'
+import { useCallback, useState } from 'react'
+import debounce from 'just-debounce-it'
 
 
 function App() {  
 
+  const [ sort, setSort ] = useState(false)
   const { search, updateSearch, error} = useSearch()
-  const { movies, loading,  getMovies} = useMovies({search})
+  const { movies, loading,  getMovies} = useMovies({search, sort})
+
+  // eslint-disable-next-line
+  const debouncedGetMovies = useCallback(
+    debounce(search => {
+      console.log('search', search)
+      getMovies({ search })
+    }, 300)
+    , [getMovies]
+  )
 
   const handleSubmit = (event) => {
       event.preventDefault()
-      getMovies()  
+      getMovies({ search })  
   }
 
-  const handleChange = (event) => {   
-    updateSearch(event.target.value)      
+  const handleSort = () => {
+    setSort(!sort)
+  }
+
+  const handleChange = (event) => {
+    const newSearch = event.target.value
+    updateSearch(newSearch)
+    debouncedGetMovies(newSearch)
   }
 
    
@@ -34,6 +52,8 @@ function App() {
            name='search' 
            type="text"
            placeholder='Avengers, Stars Wars, The Matrix...' />
+        
+        <input type="checkbox" onChange={handleSort} checked={sort} />
         <button type='submit'>Buscar</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
