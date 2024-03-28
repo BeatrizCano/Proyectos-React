@@ -1,10 +1,12 @@
-import React from 'react'
+
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import { FiltersProvider } from './context/filter.jsx'
 import './index.css'
 
+//2.Proveer el contexto
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <FiltersProvider>
     <App />
-  </React.StrictMode>,
+  </FiltersProvider>,
 )
