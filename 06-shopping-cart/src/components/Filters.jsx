@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { useId } from 'react'
-import './Filters.css'
+import '../styles/Filters.css'
 import { useFilters } from '../hooks/useFilters'
 
 export function Filters () {

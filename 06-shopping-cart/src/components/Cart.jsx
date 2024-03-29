@@ -1,10 +1,34 @@
+/* eslint-disable react/prop-types */
+import '../styles/Cart.css'
 import { CartIcon,  ClearCartIcon } from './Icons.jsx'
 import { useId } from 'react'
-import './Cart.css'
+import { useCart } from '../hooks/useCart.js'
+
+function CartItem ({ thumbnail, price, title, quantity, addToCart }) {
+    return (
+        <li>
+            <img 
+                src={thumbnail}
+                alt={title}
+            />
+            <div>
+                <strong>{title}</strong> - ${price}
+            </div>
+            <footer>
+                <small>
+                    Qty: {quantity}
+                </small>
+                <button onClick={addToCart}>+</button>
+            </footer>
+        </li>
+    )
+}
+
 
 export function Cart () {
 
     const cartCheckboxId = useId()
+    const { cart, clearCart, addToCart } = useCart()
 
  return (
     <>
@@ -15,24 +39,19 @@ export function Cart () {
 
         <aside className='cart'>
             <ul>
-                <li>
-                    <img 
-                        src="https://cdn.pixabay.com/photo/2020/09/21/21/24/donkey-5591272_960_720.jpg" 
-                        alt="Brown Perfume" 
-                    />
-                    <div>
-                        <strong>Brown Perfume</strong> - $1499
-                    </div>
-                    <footer>
-                        <small>
-                            Qty: 1
-                        </small>
-                        <button>+</button>
-                    </footer>
-                </li>
+              { 
+              cart.map(product => (
+                <CartItem 
+                    key={product.id}
+                    addToCart={() => addToCart(product)}
+                    { ...product}
+                />
+              ))
+              
+              }
             </ul>
 
-            <button>
+            <button onClick={clearCart}>
                 <ClearCartIcon />
             </button>
         </aside>
