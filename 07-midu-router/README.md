@@ -20,3 +20,10 @@
 
 1. Tras clonar el proyecto de Github, ejecutar: "npm install"
 2. Para lanzar el proyecto ejectuar ""npm run dev""
+
+## Se instaló: 
+
+- La biblioteca 'Path-to-RegExp', para crear las rutas dinámicas: 'npm install path-to-regexp -E' 
+- Para hacer testing : vitest: 'npm install vitest -D'. Para hacer los test poner 'npm run test'
+                     : happy-dom y @testing-library/react: 'npm install happy-dom @testing-library/react -D' (para simular que tenemos  un navegador o arbol de elementos)
+                     : ejecutar: 'npm run test --ui' (no me funciona, debería abrir una interfaz donde ver los test de una forma gráfica)

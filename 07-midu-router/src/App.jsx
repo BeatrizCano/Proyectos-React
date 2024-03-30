@@ -1,48 +1,39 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { Suspense, lazy } from 'react'
+
 import './App.css'
-import { useEffect } from 'react'
-import { EVENTS } from './consts'
-import HomePage from './pages/Home'
-import AboutPage from './pages/About'
 
 
-function Router ({ routes = [], defaultComponent: DefaultComponent = () => <h1>404</h1> }) {
-  const [ currentPath , setCurrentPath ] = useState(window.location.pathname)
+import { Router } from './Router'
+import Page404 from './pages/404'
+import SearchPage from './pages/Search'
+import { Route } from './Route'
 
-  useEffect(() => {
-    const onLocationChange = () => {
-      setCurrentPath(window.location.pathname)
-    }
+const LazyHomePage = lazy(() => import ('./pages/Home'))//import dinámico
+const LazyAboutPage = lazy(() => import ('./pages/About'))
 
-    window.addEventListener(EVENTS.PUSHSTATE, onLocationChange)
-    window.addEventListener(EVENTS.POPSTATE, onLocationChange)
+const appRoutes = [
+  {
+    path: '/:lang/about',
+    Component: LazyAboutPage
+  },
+  {
+    path: '/search/:query',
+    Component: SearchPage
+  }
+]
 
-    return () => {
-      window.removeEventListener(EVENTS.PUSHSTATE, onLocationChange)
-      window.removeEventListener(EVENTS.POPSTATE, onLocationChange)
-    }
-  }, [])
-
-  const Page = routes.find(({ path }) => path === currentPath)?.Component
-  return Page ? <Page /> : <DefaultComponent />
-}
 
 function App() {  
   
   return (
     <main>
-      <Router routes={[
-         {
-          path: '/',
-          Component: HomePage
-        },
-        {
-          path: '/about',
-          Component: AboutPage
-        }
-      ]}
-    />      
+      <Suspense fallback={null}>
+        <Router routes={appRoutes}  defaultComponent={Page404}>
+          <Route path='/' Component={LazyHomePage} />
+          <Route path='/about' Component={LazyAboutPage} />
+        </Router>   
+      </Suspense>         
     </main>
   )
 }
