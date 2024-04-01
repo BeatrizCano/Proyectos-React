@@ -1,17 +1,12 @@
 import { create } from "zustand";
-import { type Question } from "../types/question.type";
-import confetti from 'canvas-confetti'
+import confetti from 'canvas-confetti';
+// 'devtools' es para usar las herramientas de 'redux devtools'
+import { persist,  devtools } from "zustand/middleware";
+import { State } from "../interfaces/State.interface";
 
-interface State {
-    questions: Question[],
-    currentQuestion: number,
-    fetchQuestions: (limit: number) => Promise<void>,
-    selectAnswer: (questionId: number, answerId: number) => void,
-    goNextQuestion: () => void,
-    goPreviousQuestion: () => void
-}
 
-export const useQuestionsStore = create<State>((set, get) => {
+// se usa 'persist' para almacenar los datos, devuelve una función, así que hay que añadir () antes, y debe envolver los datos que queremos persistir
+export const useQuestionsStore = create<State>()(devtools(persist((set, get) => {
     return {
         questions: [],
         currentQuestion: 0, //posición del array de Questions
@@ -21,7 +16,8 @@ export const useQuestionsStore = create<State>((set, get) => {
          const json = await res.json()
 
         const questions = json.sort(() => Math.random() - 0.5).slice(0, limit)
-        set({ questions })
+        // Se añade: , false, 'FETCH_QUESTIONS' para nombrar las acciones y usar las devtools
+        set({ questions }, false, 'FETCH_QUESTIONS')
         },
 
         selectAnswer: (questionId: number, answerIndex: number) => {
@@ -43,7 +39,7 @@ export const useQuestionsStore = create<State>((set, get) => {
             }
 
             // actualizamos el estado
-            set({ questions: newQuestions})            
+            set({ questions: newQuestions} , false, 'SELECT_ANSWER' )            
         },
 
         goNextQuestion: () => {
@@ -51,7 +47,7 @@ export const useQuestionsStore = create<State>((set, get) => {
             const nextQuestion = currentQuestion + 1
 
             if (nextQuestion < questions.length) {
-                set({ currentQuestion: nextQuestion })
+                set({ currentQuestion: nextQuestion } , false, 'GO_NEXT_QUESTION')
             }
         },
 
@@ -60,9 +56,14 @@ export const useQuestionsStore = create<State>((set, get) => {
             const previousQuestion = currentQuestion -1
 
             if (previousQuestion >= 0) {
-                set({ currentQuestion : previousQuestion})
+                set({ currentQuestion : previousQuestion} , false, 'GO_PREVIOUS_QUESTION')
             }
+        },
+
+        reset: () => {
+            set({ currentQuestion: 0, questions: [] } , false, 'RESET' )
         }
-    }
-    
-})
+    }    
+}, {
+    name: 'questions'// por defecto guarda los datos en localStorage
+})))
