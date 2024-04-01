@@ -4,6 +4,7 @@ import { useQuestionsStore } from "../store/questions"
 import { type Question as QuestionType } from "../types/question.type"
 import SyntaxHighLighter from 'react-syntax-highlighter'
 import { gradientDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import { Footer } from "./Footer"
 
 
 const getBackgroundColor = (info: QuestionType, index: number) => {
@@ -83,6 +84,8 @@ export const Game = () => {
             </IconButton> 
             </Stack>
             <Question info={questionInfo} />
+
+            <Footer />
         </>
     )
 }
