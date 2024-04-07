@@ -1,9 +1,10 @@
 // Usamoe el hook useReducer (pasos)
 
 import { useReducer } from "react"
-import { Action } from "../Types/ActionType"
-import { State } from "../interfaces/StateInterface"
-import { FromLanguage, Language } from "../Types/LanguageType"
+import { Action } from "../Types/Action.type"
+import { State } from "../interfaces/State.interface"
+import { FromLanguage, Language } from "../Types/Language.type"
+import { AUTO_LANGUAGE } from "../constants/constants"
 
 // 1. Crear un estado inicial
 const initialState : State = {
@@ -20,13 +21,18 @@ const initialState : State = {
       const { type } = action
       // si el tipo coincide, se devuelve un nuevo estado el que se intercambian los lenguages (interchange). 
       // Cuando se recibe una nueva acción se intercambia el estado
-      if (type === 'INTERCHANGE_LANGUAGES')
+      if (type === 'INTERCHANGE_LANGUAGES') {
+        //lógica del estado dentro del reducer
+        // es interesante porque lo evitamos en los componentes
+        if (state.fromLanguage === AUTO_LANGUAGE) return state
+
         return {
           // estado actual
           ...state,
           fromLanguage: state.toLanguage,
           toLanguage: state.fromLanguage
         }
+      }
   
       // Esto es para cambiar el idioma en el input del texto de entrada (escoger el lenguage al que quieres que se traduzca). 
       // Payload es la información que envía la acción para actualizar el estado, el siguiente paso de la acción. En este caso, quiero que cambies el idioma y este es el que quiero que cambies
