@@ -1,5 +1,5 @@
 import { Form } from "react-bootstrap"
-import { AUTO_LANGUAGE, SUPPORTED_LAGUAGES } from "../constants/constants"
+import { AUTO_LANGUAGE, SUPPORTED_LANGUAGES } from "../constants/constants"
 import { LanguageSelectorProps } from "../Types/LanguageSelectorProps.type"
 import { type FC } from "react"
 import { Language } from "../Types/Language.type"
@@ -19,7 +19,7 @@ export const LanguageSelector: FC<LanguageSelectorProps> = ( { onChange, type, v
             {type === SectionType.From && <option value={AUTO_LANGUAGE}>Detectar idioma</option> }
 
             {/* Usando entries se saca tanto la key como el value del objeto */}
-            {Object.entries(SUPPORTED_LAGUAGES).map(([key, literal]) => (
+            {Object.entries(SUPPORTED_LANGUAGES).map(([key, literal]) => (
                 <option key={key} value={key}>
                     {literal}
                 </option>
